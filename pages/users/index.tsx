@@ -1,31 +1,28 @@
 import { GetStaticProps } from "next";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import Layout from "../../src/components/Layout";
 import List from "../../src/components/List";
+import { en } from "../../src/i18n/en";
+import { ptBr } from "../../src/i18n/pt-br";
 import { User } from "../../src/types";
 import { sampleUserData } from "../../src/utils/sample-data";
-
-
 
 type Props = {
   items: User[];
 };
 
-const WithStaticProps = ({ items }: Props) => (
-  <Layout title="Users List | Next.js + TypeScript Example">
-    <h1>Users List</h1>
-    <p>
-      Example fetching data from inside <code>getStaticProps()</code>.
-    </p>
-    <p>You are currently on: /users</p>
-    <List items={items} />
-    <p>
-      <Link href="/">
-        <a>Go home</a>
-      </Link>
-    </p>
-  </Layout>
-);
+const WithStaticProps = ({ items }: Props) => {
+  const { locale } = useRouter();
+  const translation = locale === "en" ? en : ptBr;
+  return (
+    <Layout title="Users List | Next.js + TypeScript Example">
+      <h1>{translation.pages.usersListPage.h1}</h1>
+      <p>{translation.pages.usersListPage.p1}</p>
+      <p>{translation.pages.usersListPage.p2}</p>
+      <List items={items} />
+    </Layout>
+  );
+};
 
 export const getStaticProps: GetStaticProps = async () => {
   // Example for including static props in a Next.js function component page.

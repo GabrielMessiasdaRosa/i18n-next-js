@@ -1,15 +1,16 @@
-import Link from 'next/link'
-import Layout from '../src/components/Layout'
+import { useRouter } from "next/router";
+import Layout from "../src/components/Layout";
+import { en } from "../src/i18n/en";
+import { ptBr } from "../src/i18n/pt-br";
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-)
+const IndexPage = () => {
+  const { locale } = useRouter();
+  const translation = locale === "en" ? en : ptBr;
+  return (
+    <Layout title="Home | Next.js + TypeScript Example">
+      <h1>{translation.pages.homePage.h1}</h1>
+    </Layout>
+  );
+};
 
-export default IndexPage
+export default IndexPage;
